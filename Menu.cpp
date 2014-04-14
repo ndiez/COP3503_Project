@@ -9,7 +9,7 @@
 using namespace std;
 int main() {
 	Number* ans;
-	Number* ansOld;
+	Number* ansOld = new Rational(0);
 	Shunting* s = new Shunting();
 	int computeLoop = 1;
 	int helpLoop = 0;

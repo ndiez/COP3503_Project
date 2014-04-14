@@ -57,7 +57,7 @@ Number * Operations::add(Number * a, Number * b) {
 				stringstream ss, tt;
 				ss<<aNum;
 				tt<<aDenom;
-				irrAns = tt.str() + " + " + irrStr;
+				irrAns = ss.str() + " + " + irrStr;
 				irrVal = b->getValue();
 				ansVal = (float) (aNum/aDenom) + irrVal;
 				ans = new Irrational(ansVal, irrAns);

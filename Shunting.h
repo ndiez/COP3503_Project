@@ -20,8 +20,7 @@ public:
     Shunting();
 	//Actually does the calculations
 	//Has to return a number because of the ans keyword
-	//Calls parseTokens, then convertInput, then behaves like RPNtoDouble
-	//Does this so the main isn't  cluttered like the one we saw
+	//Calls parseTokens, then convertInput, then preforms the calculations using rationals, irrationals.
 	Number* evaluate(string input, Number* ansOld);
 	Number* toNumber(string str);
 private:
@@ -30,26 +29,23 @@ private:
 
 	vector <string> parseTokens(const string & str);
 
-	//Called by evaluate 2nd
-	//Rearranges the elements into PEMDAS
-	//AKA infixToRPN
+	//Rearranges the elements into PEMDAS. 
+	// Input required is a vector of tokens that contain the expression in infix notation. 
+	// Outputs the vector of tokens in RPN notation. 
 	bool convertInput(const vector<string>& input, const int& size, vector<string>& output);
 
 	//Called by parseTokens then convertInput
 	bool isParenthesis(const string& str);
 
-	//Called by all three methods
+	//Called by all three methods- finds if token is operator. 
 	bool isOperator(const string& str);
 
-	//Called only by convertInput
+	//Called only by convertInput, finds if token is left or right associative. 
 	bool isAssociative(const string& str, int precedence);
 
 	//Compares Operation order precedence
-	//AKA cmpPrecedence
 	int comparePrec(const string& firsttoken, const string& secondtoken );
 
-	//Converts decimals to fractions... Maybe.
+	//Converts decimals to fractions. 
 	Rational toFraction(float f);
 };
-
-#endif /* SHUNTING_H_ */

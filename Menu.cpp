@@ -9,6 +9,7 @@
 using namespace std;
 int main() {
 	Number* ans;
+	Number* ansOld;
 	Shunting* s = new Shunting();
 	int computeLoop = 1;
 	int helpLoop = 0;
@@ -204,7 +205,8 @@ int main() {
 				 computeInput.at(0) == 's' ) {
 				expressionOld = computeInput;
 				cin.clear();
-				ans = s->evaluate(computeInput, ans);
+				ans = s->evaluate(computeInput, ansOld);
+				ansOld = ans;
 				cout << "The result of your expression is: " << ans->toString() << endl;
 				computeInput.clear();
 		}

@@ -443,8 +443,9 @@ Number * Operations::toRational(string a) {
 	Number* ans;
 	for (int i =0; i < (int)a.size(); i++) {
 		if (a.at(i) == '.' ) {
-			a.erase(i);
+
 			int power = a.size() - (i + 1);
+			a.erase(i, i);
 			int tenPower = pow (10, power);
 			char *b=new char[a.size()];
 			b[a.size()]=0;

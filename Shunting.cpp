@@ -206,7 +206,7 @@ Number* Shunting:: evaluate(string input, Number* ansOld)
 				
 				Number* n2 = nums.top();
 				nums.pop();
-				if (!nums.empty() )
+				if (!nums.empty())
 				{
 					Number* n1 = nums.top();
 					nums.pop();
@@ -247,6 +247,7 @@ Number* Shunting:: evaluate(string input, Number* ansOld)
 	}
 
 
+
 	return nums.top()->simplify();
 	}
 // Converts the input string to a number so we can check if it's rational or irrational. 
@@ -254,28 +255,45 @@ Number* Shunting:: toNumber(string str, Number* ansOld){
 	Number* ans;
 	Operations * o = new Operations();
 	bool noAns = true;
+	bool decimalRt = false;
+	string sub;
 
 	if(str.at(0) == 'a')
 	{
 		str = ansOld->toString();
 	}
+	for(int i = 1; i < (int)str.size() && noAns && !decimalRt; i++)
+	{
+		if(str.at(i) == '.')
+		{
+			//cout << str.find(':');
+			if(str.find(':') < str.length())
+			{
+				sub = str.substr(str.find(':'));
+				str.erase(str.find(':') + 1);
+				ans = o->toRational(sub);
+				str += ans->toString();
+				decimalRt = true;
+			}
+			else
+			{
+				ans = o->toRational(str);
+				noAns = false;
 
-	if((str.at(0) == 'l')  || (str.at(0) == 'e') || (str.at(0) == 'p') || (str.at(0) == 's'))
+			}
+		}
+	}
+
+	if(noAns && (str.at(0) == 'l')  || (str.at(0) == 'e') || (str.at(0) == 'p') || (str.at(0) == 's'))
 	{
 		ans = new Irrational(str);
 		noAns = false;
 	}
-	else
+	else if(noAns)
 	{
 		for(int i = 1; i < (int)str.size() && noAns; i++)
 		{
-			if(str.at(i) == '.')
-			{
-				ans = o->toRational(str);
-				noAns = false;
-				break;
-			}
-			else if(str.at(i) == 'r')
+			if(str.at(i) == 'r')
 			{
 				ans = new Irrational(str);
 				noAns = false;

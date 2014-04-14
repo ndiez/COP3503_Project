@@ -49,3 +49,4 @@ private:
 	//Converts decimals to fractions. 
 	Rational toFraction(float f);
 };
+#endif

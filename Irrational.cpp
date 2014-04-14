@@ -1,6 +1,8 @@
 #include "Irrational.h"
 #include <cmath>
 #include <stdlib.h>
+#include <iostream>
+#include <sstream>
 #include <list>
 
 Irrational::Irrational(){
@@ -29,7 +31,7 @@ Irrational::Irrational(string irr){ //the constructor that is given a number and
 		}
 		if(logOf == base){
 			fValue = 1;
-			
+
 		}
 		else if(base == "e"){
 			double a = atof(logOf.c_str());
@@ -99,7 +101,12 @@ string Irrational::getLogOf(){
 
 string Irrational::toString(){  //prints the string of the irrational
 	string str;
-	if(type == "e"){
+	if (fValue == (int)fValue) {
+		stringstream ss;
+		ss<<(int)fValue;
+		str= ss.str();
+	}
+	else if(type == "e"){
 		str = "e";
 	}
 	else if(type == "pi"){
@@ -113,10 +120,9 @@ string Irrational::toString(){  //prints the string of the irrational
 	}
 	else if(type == "nrt"){
 		if(fValue == (int) fValue){
-		// DONT FORGET ATOI
 		stringstream ss;
-		ss<
-			str = fValue;
+		ss<<(int)fValue;
+			str = ss.str();
 		}
 		else if(n == "2"){
 			str = "sqrt:" + rootOf;

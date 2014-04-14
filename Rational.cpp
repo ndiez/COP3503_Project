@@ -17,10 +17,10 @@ Rational::Rational(int numerator, int denominator){
 	}
 	this->numerator = numerator;
 	this->denominator = denominator;
-	
+
 	sType = "Rational";
 	fValue = (float)numerator / (float)denominator;
-	
+
 }
 
 
@@ -37,7 +37,13 @@ int Rational::getDenom(){
 //else return "numerator '/' denominator"
 string Rational::toString() {
 	string number;
-	if (this->denominator == 0) {
+	if (fValue == (int)fValue) {
+		stringstream ss;
+		ss<<(int)fValue;
+		number= ss.str();
+	}
+
+	else if (this->denominator == 0) {
 		return "Cannot divide by zero.";
 	}
 	else if (this->numerator == 0) {

@@ -1,8 +1,6 @@
 #include "Irrational.h"
 #include <cmath>
 #include <stdlib.h>
-#include <iostream>
-#include <sstream>
 #include <list>
 
 Irrational::Irrational(){
@@ -26,12 +24,11 @@ Irrational::Irrational(string irr){ //the constructor that is given a number and
 		for(i = 4; ':'!= (int)irr.at(i); i++){
 			base += irr.at(i);
 		}
-		for(i; i< (int)irr.length(); i++){
+		for( ; i< (int)irr.length(); i++){
 			logOf = irr.at(i);
 		}
 		if(logOf == base){
 			fValue = 1;
-
 		}
 		else if(base == "e"){
 			double a = atof(logOf.c_str());
@@ -77,9 +74,15 @@ Irrational::Irrational(string irr){ //the constructor that is given a number and
 		for(i += 3; i < (int)irr.length(); i++){
 			rootOf += irr.at(i);
 		}
-		double a = atof(n.c_str());
-		double b = atof(rootOf.c_str());
-		fValue = pow (b, (1/a));
+		if(rootOf.find("/0")){
+			type = "NaN";        //Should fix the 3rt:27/0 problem
+			fValue = 0;
+		}
+		else{
+			double a = atof(n.c_str());
+			double b = atof(rootOf.c_str());
+			fValue = pow (b, (1/a));
+		}
 	}
 	else{
 		cout<< "Error...not an irrational number" << endl;
@@ -101,35 +104,26 @@ string Irrational::getLogOf(){
 
 string Irrational::toString(){  //prints the string of the irrational
 	string str;
-	if (fValue == (int)fValue) {
-		stringstream ss;
-		ss<<(int)fValue;
-		str= ss.str();
-	}
-	else if(type == "e"){
+	if(type == "e"){
 		str = "e";
+		return str;
 	}
 	else if(type == "pi"){
 		str = "pi";
+		return str;
 	}
 	else if(type == "log"){
-		if (fValue != 1)
-			str = "log_" + base + ":" + logOf;
-		else 
-			str = "1";
+		str = "log_" + base + ":" + logOf;
+		return str;
 	}
 	else if(type == "nrt"){
-		if(fValue == (int) fValue){
-		stringstream ss;
-		ss<<(int)fValue;
-			str = ss.str();
-		}
-		else if(n == "2"){
+		if(n == "2"){
 			str = "sqrt:" + rootOf;
 		}
 		else{
 			str = n + "rt:" + rootOf;
 		}
+		return str;
 	}
 	else if (!type.empty()) {
 		return this->type;
@@ -137,7 +131,6 @@ string Irrational::toString(){  //prints the string of the irrational
 	else{
 		return "No toString...error";
 	}
-	return str;
 }
 
 float Irrational::getValue(){

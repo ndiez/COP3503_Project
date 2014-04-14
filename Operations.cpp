@@ -34,7 +34,12 @@ Number * Operations::add(Number * a, Number * b) {
 			aNum = a->getNum();
 			aDenom = a->getDenom();
 			irrStr = b->toString();
-			if (aNum == 1 && aDenom == 1) {
+			if(aNum ==0){
+				irrAns = irrStr;
+				ansVal = b->getValue();
+				ans = new Irrational(ansVal, irrAns);
+			}
+			else if (aNum == 1 && aDenom == 1) {
 				irrAns = "1 + " + irrStr;
 				irrVal = b->getValue();
 				ansVal = 1 + irrVal;
@@ -269,25 +274,65 @@ Number* Operations::multiply(Number* a, Number* b) {
 					aNum = a->getNum();
 					aDenom = a->getDenom();
 					irrStr = b->toString();
-					stringstream ss, tt;
-					ss<<aNum;
-					tt<<aDenom;
-					irrAns = "( " + ss.str() + " * " + irrStr + " )" + " / " + tt.str();
-					irrVal = b->getValue();
-					ansVal = (float) (aNum/aDenom) * irrVal;
-					ans = new Irrational(ansVal, irrAns);
+					if(aDenom == 1 && aNum == 1){
+						irrAns = irrStr;
+						ansVal = b->getValue();
+						ans = new Irrational(ansVal, irrAns);
+					}
+					else if(aDenom == 1){
+						irrAns = aNum + " * " + irrStr;
+						ansVal = aNum * b->getValue();
+						ans = new Irrational(ansVal, irrAns);
+					}
+					else if(aNum == 1){
+						stringstream ss;
+						ss<<aDenom;
+						irrAns = irrStr + " / " + ss.str();
+						ansVal = b->getValue() / aDenom;
+						ans = new Irrational(ansVal, irrAns);
+					}
+					else{
+						stringstream ss, tt;
+						ss<<aNum;
+						tt<<aDenom;
+						irrAns = "( " + ss.str() + " * " + irrStr + " )" + " / " + tt.str();
+						irrVal = b->getValue();
+						ansVal = (float) (aNum/aDenom) * irrVal;
+						ans = new Irrational(ansVal, irrAns);
+					}
 				}
 				else {
 					bNum = b->getNum();
 					bDenom = b->getDenom();
 					irrStr = a->toString();
-					stringstream ss, tt;
-					ss<<bNum;
-					tt<<bDenom;
-					irrAns = "( " + ss.str() + " * " + irrStr + " )" + " / " + tt.str();
-					irrVal = a->getValue();
-					ansVal = (float) (bNum/bDenom) * irrVal;
-					ans = new Irrational(ansVal, irrAns);
+					if(bNum == 1 && bDenom == 1){
+						irrAns = irrStr;
+						ansVal = a->getValue();
+						ans = new Irrational(ansVal, irrAns);
+					}
+					else if(bDenom == 1){
+						stringstream ss;
+						ss<<bNum;
+						irrAns = irrStr + " * " + ss.str();
+						ansVal = a->getValue() * bNum;
+						ans = new Irrational(ansVal, irrAns);
+					}
+					else if(bNum == 1){
+						stringstream ss;
+						ss<<bDenom;
+						irrAns = irrStr + " / " + ss.str();
+						ansVal = a->getValue() / bDenom;
+						ans = new Irrational(ansVal, irrAns);
+					}
+					else{
+						stringstream ss, tt;
+						ss<<bNum;
+						tt<<bDenom;
+						irrAns = "( " + ss.str() + " * " + irrStr + " )" + " / " + tt.str();
+						irrVal = a->getValue();
+						ansVal = (float) (bNum/bDenom) * irrVal;
+						ans = new Irrational(ansVal, irrAns);
+					}
 				}
 
 			}

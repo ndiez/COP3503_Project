@@ -22,7 +22,7 @@ public:
 	//Has to return a number because of the ans keyword
 	//Calls parseTokens, then convertInput, then preforms the calculations using rationals, irrationals.
 	Number* evaluate(string input, Number* ansOld);
-	Number* toNumber(string str);
+	Number* toNumber(string str, Number* ansOld);
 private:
 
     typedef map <string, pair<int,int > > operatorMap;

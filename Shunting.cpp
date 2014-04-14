@@ -193,7 +193,7 @@ Number* Shunting:: evaluate(string input, Number* ansOld)
 
 				try
 				{
-					nums.push(toNumber(converted[i], ansOld));
+					nums.push(toNumber(converted[i], ansOld)->simplify());
 				}
 				catch(int e)
 				{
@@ -233,7 +233,7 @@ Number* Shunting:: evaluate(string input, Number* ansOld)
 						result = n2;
 				}
 
-				nums.push(result);
+				nums.push(result->simplify());
 
 			}
 		}
@@ -243,7 +243,7 @@ Number* Shunting:: evaluate(string input, Number* ansOld)
 	{
 		cout << "Mismatched parenthesis" << endl;
 		Number* result = new Rational(0);
-		nums.push(result);
+		nums.push(result->simplify());
 	}
 
 

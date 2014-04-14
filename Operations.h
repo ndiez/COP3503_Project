@@ -22,3 +22,4 @@ private:
 	float irrVal, irrVal2, ansVal, logofa, logofb, logofans;
 	string irrAns, irrStr, irrStr2;
 };
+#endif /*OPERATIONS_H_*/

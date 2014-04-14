@@ -190,11 +190,10 @@ Number* Shunting:: evaluate(string input, Number* ansOld)
 		{
 			if ( !isOperator(converted[i]) )
 			{
-				cout << "!Op converted[i]= " << converted[i] << endl;
+
 				try
 				{
-					cout << "nums.push " << converted[i] << endl;
-					nums.push(toNumber(converted[i]));
+					nums.push(toNumber(converted[i], ansOld));
 				}
 				catch(int e)
 				{
@@ -235,29 +234,34 @@ Number* Shunting:: evaluate(string input, Number* ansOld)
 				}
 
 				nums.push(result);
-				cout << "pushed result = " << result->toString() << endl;
+
 			}
 		}
 	}
 
 	else
 	{
-		throw invalid_argument("Mismatched parenthesis");
+		cout << "Mismatched parenthesis" << endl;
+		Number* result = new Rational(0);
+		nums.push(result);
 	}
 
-	cout << "nums.top() = " << nums.top()->toString() << endl;
-	cout << "nums size= " << nums.size() << endl;
+
 	return nums.top()->simplify();
 	}
 // Converts the input string to a number so we can check if it's rational or irrational. 
-Number* Shunting:: toNumber(string str){
+Number* Shunting:: toNumber(string str, Number* ansOld){
 	Number* ans;
 	Operations * o = new Operations();
 	bool noAns = true;
 
+	if(str.at(0) == 'a')
+	{
+		str = ansOld->toString();
+	}
+
 	if((str.at(0) == 'l')  || (str.at(0) == 'e') || (str.at(0) == 'p') || (str.at(0) == 's'))
 	{
-		cout << "str= " << str;
 		ans = new Irrational(str);
 		noAns = false;
 	}
@@ -273,7 +277,6 @@ Number* Shunting:: toNumber(string str){
 			}
 			else if(str.at(i) == 'r')
 			{
-				cout << "str= " << str;
 				ans = new Irrational(str);
 				noAns = false;
 				break;
@@ -306,7 +309,5 @@ Number* Shunting:: toNumber(string str){
 		delete[] c;
 	}
 
-
-	cout << "created " << ans->getType() << " = " << ans->toString() << endl;
 	return ans;
 }

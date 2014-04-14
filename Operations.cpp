@@ -353,7 +353,7 @@ Number* Operations::multiply(Number* a, Number* b) {
 Number * Operations::divide(Number * a, Number * b) {
 	Number * ans;
 	if (b->getValue() == 0) {
-		cout << "Cannot divide by zero, assuming denominator = 1."
+		cout << "Cannot divide by zero, assuming denominator = 1." << endl;
 		b = new Rational(1);
 	}
 	if (a->getType() == "Rational" && b->getType() == "Rational") {

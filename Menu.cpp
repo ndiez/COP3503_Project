@@ -18,8 +18,8 @@ int main() {
 	cout << "------------------------------------------------------------------------------" << endl;
 	cout << "Expression Calculator Project"													 << endl;
 	cout << "By: Yayati Bagga, Nick Diez, Kayleigh Dvorak, Mathew Giaramita"		 		 << endl;
-	cout << "!!! WARNING !!! Include negative numbers first."								 << endl;
-	cout << "Example: 5 * -12 -----> -12 * 5"															 << endl;
+	cout << "!!! WARNING !!! Include parenthesis outside of negative numbers when entering"	 << endl;
+	cout << "Example: 5 * (-12)"															 << endl;
 	cout << "!!! WARNING !!! Include a space between each operation of the following type:"  << endl;
 	cout << "+, -, *, /, ^." 																 << endl;
 	cout << "------------------------------------------------------------------------------" << endl;

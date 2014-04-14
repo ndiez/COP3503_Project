@@ -78,11 +78,11 @@ Number* Rational::simplify() {
 	int a= this->getNum();
 	int b = this->getDenom();
 	if (a == b) {
-		Number* one = new Rational(1, 1);
+		Number* one = new Rational(1);
 		return one;
 	}
 	else if (b == 1) {
-		Number* integer = new Rational(a, 1);
+		Number* integer = new Rational(a);
 		return integer;
 	}
 	for (int j = 0; j < 10; j++ ){

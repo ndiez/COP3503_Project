@@ -443,6 +443,8 @@ Number * Operations::exponentiate(Number * a, Number * b) {
 		}
 	return ans;
 }
+
+// Converts the input string to a number so we can check if it's rational or irrational.
 Number * Operations::toRational(string a) {
 	Number* ans;
 	for (int i =0; i < (int)a.size(); i++) {
@@ -466,3 +468,82 @@ Number * Operations::toRational(string a) {
 	}
 	return ans;
 }
+
+Number* Operations:: toNumber(string str, Number* ansOld){
+	Number* ans;
+	bool noAns = true;
+	bool decimalRt = false;
+	string sub;
+
+	if(str.at(0) == 'a')
+	{
+		str = ansOld->toString();
+	}
+	for(int i = 1; i < (int)str.size() && noAns && !decimalRt; i++)
+	{
+		if(str.at(i) == '.')
+		{
+			//cout << str.find(':');
+			if(str.find(':') < str.length())
+			{
+				sub = str.substr(str.find(':'));
+				str.erase(str.find(':') + 1);
+				ans = toRational(sub);
+				str += ans->toString();
+				decimalRt = true;
+			}
+			else
+			{
+				ans = toRational(str);
+				noAns = false;
+
+			}
+		}
+	}
+
+	if(noAns && (str.at(0) == 'l')  || (str.at(0) == 'e') || (str.at(0) == 'p') || (str.at(0) == 's'))
+	{
+		ans = new Irrational(str);
+		noAns = false;
+	}
+	else if(noAns)
+	{
+		for(int i = 1; i < (int)str.size() && noAns; i++)
+		{
+			if(str.at(i) == 'r')
+			{
+				ans = new Irrational(str);
+				noAns = false;
+				break;
+			}
+			else if(str.at(i) == '/')
+			{
+				char *a=new char[str.size()+1];
+				a[str.substr(i-1).size()]=0;
+				memcpy(a,str.c_str(),str.substr(i-1).size());
+
+				char *b=new char[str.size()+1];
+				b[str.substr(i+1).size()]=0;
+				memcpy(b,str.c_str(),str.substr(i+1).size());
+				ans = new Rational(atoi(a), atoi(b));
+				noAns = false;
+				delete[] a;
+				delete[] b;
+				break;
+			}
+		}
+
+	}
+
+	if(noAns)
+	{
+		char *c=new char[str.size()+1];
+		c[str.size()]=0;
+		memcpy(c,str.c_str(),str.size());
+		ans = new Rational(atoi(c));
+		delete[] c;
+	}
+
+	return ans;
+}
+

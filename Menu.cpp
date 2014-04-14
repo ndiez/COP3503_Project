@@ -207,7 +207,10 @@ int main() {
 				cin.clear();
 				ans = s->evaluate(computeInput, ansOld);
 				ansOld = ans;
-				cout << "The result of your expression is: " << ans->toString() << endl;
+				if(ans->getType() == "Rational")
+					cout << "The result of your expression is: " << ans->toString() << endl;
+				else
+					cout << "The result of your expression is: " << ans->toString().substr(0, ans->toString().length() - 4) << endl;
 				computeInput.clear();
 		}
 		else {

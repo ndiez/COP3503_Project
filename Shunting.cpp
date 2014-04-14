@@ -9,9 +9,10 @@
 using namespace std;
 
 Shunting::Shunting() {
-//typedef map <string, pair< int,int> > operatorMap;
+
 
 }
+// Defining an operator map so we can set the precedence and right or left associative value for all the basic functions. 
 typedef map <string, pair< int,int> > operatorMap;
 const operatorMap:: value_type assocs[] =
     {  operatorMap :: value_type( "+", make_pair<int,int>( 0, 0 )),
@@ -23,15 +24,18 @@ const operatorMap:: value_type assocs[] =
 
 const operatorMap opmap(assocs, assocs + sizeof(assocs)/sizeof(assocs[0]));
 
+//Testing if input token is parenthesis. 
 bool Shunting::isParenthesis(const string& str)
 {
     return str == "(" || str == ")";
 }
-
+//Testing if input token is operator. 
 bool Shunting:: isOperator(const string& str)
 {
     return str == "+" || str == "-" || str == "*" || str == "/" || str == "^";
 }
+
+//Finding out associative value for operators & returning it. 
 bool Shunting::isAssociative(const string& str, int precedence)
 {
 	const pair<int,int> p = opmap.find(str)->second;
@@ -43,7 +47,7 @@ bool Shunting::isAssociative(const string& str, int precedence)
      // if(tkn == "+" || tkn == "-" || tkn == "/" || tkn == "*") return true;
      //else return false;
 }
-
+// Comparing precedence of operators through the operator map. 
 int Shunting:: comparePrec(const string& firsttoken, const string& secondtoken ) {
  const :: pair<int,int> p1 = opmap.find(firsttoken) -> second;
  const :: pair<int,int> p2 = opmap.find(secondtoken) -> second;
@@ -51,8 +55,9 @@ int Shunting:: comparePrec(const string& firsttoken, const string& secondtoken )
     return p1.first - p2.first;
 }
 
+// Takes a string input and converts the string into a vector of tokens, so we can convert it into RPN notation. 
+// Makes sure to see if each of the tokens is empty , parenthesis, operator or number. 
 vector<string> Shunting::parseTokens(const string& input) {
-	////cout << "ParseTokens(" << input << ")" << endl;
     vector<string> tokens;
     string str = "";
 
@@ -61,28 +66,22 @@ vector<string> Shunting::parseTokens(const string& input) {
 
         if (isParenthesis(token) || isOperator(token))
         {
-        	//cout << "Parenthesis? " << isParenthesis(token) << " isOperator(token)" << isOperator(token) << endl;
             if (!str.empty())
             {
-            	//cout << "Parenthesis? " << isParenthesis(token) << " isOperator(token)" << isOperator(token) << endl;
-            	//cout << "!str.empty() tokens.push_back(" << str << ")" << endl;
                  tokens.push_back(str ) ;
             }
             str = "";
-            //cout << "tokens.push_back(" << token << ")" << endl;
             tokens.push_back(token);
         }
         else {
             if (!token.empty() && token != " ")
             {
-            	//cout << "str.append(" << token << ")" << endl;
                 str.append( token );
             }
             else
             {
                 if (str != "")
                 {
-                	//cout << "tokens.push_back(" << str << ")" << endl;
                     tokens.push_back(str);
                     str = "";
                 }
@@ -94,6 +93,8 @@ vector<string> Shunting::parseTokens(const string& input) {
     	return tokens;
 }
 
+// Takes the vector of tokens and uses a stack of operators and output queue to create an RPN notation of the infix notation that is passed in. 
+// Outputs a vector of tokens in the RPN notation, so it is easier to calculate. 
 bool Shunting::convertInput(const vector<string>& input, const int& size, vector<string>& outputVec) {
 
 	bool success = true;
@@ -154,7 +155,6 @@ bool Shunting::convertInput(const vector<string>& input, const int& size, vector
     while (!opstack.empty())
     {
         const string TokenStack = opstack.top();
-        //cout << "TokenStack = " << TokenStack;
         if ( isParenthesis(TokenStack ))
         {
             return false;
@@ -170,8 +170,8 @@ bool Shunting::convertInput(const vector<string>& input, const int& size, vector
 
 //Actually does the calculations
 //Has to return a number because of the ans keyword
-//Calls parseTokens, then convertInput, then behaves like RPNtoDouble
-//Does this so the main isn't  cluttered like the one we saw
+//Calls parseTokens, then convertInput, then access the number classes so the actual operations can be done. 
+
 Number* Shunting:: evaluate(string input, Number* ansOld)
 {
 
@@ -188,7 +188,6 @@ Number* Shunting:: evaluate(string input, Number* ansOld)
 	{
 		for ( int i = 0; i < (int) converted.size(); i++ )
 		{
-			// If the token is a value push it onto the stack
 			if ( !isOperator(converted[i]) )
 			{
 				cout << "!Op converted[i]= " << converted[i] << endl;
@@ -205,8 +204,7 @@ Number* Shunting:: evaluate(string input, Number* ansOld)
 			else
 			{
 				Number* result;
-
-				// Token is an operator: pop top two entries
+				
 				Number* n2 = nums.top();
 				nums.pop();
 				if (!nums.empty() )
@@ -214,7 +212,6 @@ Number* Shunting:: evaluate(string input, Number* ansOld)
 					Number* n1 = nums.top();
 					nums.pop();
 
-					//Get the result
 					if(converted[i] == "+") {
 						result = o->add(n1, n2);
 					}
@@ -237,7 +234,6 @@ Number* Shunting:: evaluate(string input, Number* ansOld)
 						result = n2;
 				}
 
-				// Push result onto stack
 				nums.push(result);
 				cout << "pushed result = " << result->toString() << endl;
 			}
@@ -253,6 +249,7 @@ Number* Shunting:: evaluate(string input, Number* ansOld)
 	cout << "nums size= " << nums.size() << endl;
 	return nums.top()->simplify();
 	}
+// Converts the input string to a number so we can check if it's rational or irrational. 
 Number* Shunting:: toNumber(string str){
 	Number* ans;
 	Operations * o = new Operations();

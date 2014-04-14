@@ -15,6 +15,12 @@ Rational::Rational(int numerator, int denominator){
 		cout<< "Cannot divide by zero, assuming denominator = 1." << endl;
 		denominator = 1;
 	}
+
+	if(denominator < 0)
+	{
+		numerator *= -1;
+		denominator *= -1;
+	}
 	this->numerator = numerator;
 	this->denominator = denominator;
 

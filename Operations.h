@@ -16,6 +16,7 @@ public:
 	Number* divide(Number* a, Number* b);
 	Number* exponentiate(Number* a, Number* b);
 	Number* toRational(string a);
+	Number* toNumber(string str, Number* ansOld);
 private:
     // Private requirements for setting numerator & denominators, irrational values, logs, etc. 
 	int aNum, aDenom, bNum, bDenom, ansNum, ansDenom;

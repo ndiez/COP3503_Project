@@ -280,8 +280,10 @@ Number* Operations::multiply(Number* a, Number* b) {
 						ans = new Irrational(ansVal, irrAns);
 					}
 					else if(aDenom == 1){
-						irrAns = aNum + " * " + irrStr;
-						ansVal = aNum * b->getValue();
+						stringstream ss;
+						ss<< aNum;
+						irrAns = ss.str() + " * " + irrStr;
+						ansVal = (float) aNum * b->getValue();
 						ans = new Irrational(ansVal, irrAns);
 					}
 					else if(aNum == 1){

@@ -75,6 +75,7 @@ Irrational::Irrational(string irr){ //the constructor that is given a number and
 			rootOf += irr.at(i);
 		}
 		if(rootOf.find("/0")){
+			cout << "Cannot divide by 0. Assuming expression = 0"
 			type = "NaN";        //Should fix the 3rt:27/0 problem
 			fValue = 0;
 		}

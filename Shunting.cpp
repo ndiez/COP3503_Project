@@ -184,29 +184,16 @@ Number* Shunting:: evaluate(string input, Number* ansOld)
 	vector<string> tokens = parseTokens(input);
 	vector<string> converted;
 	stack<Number*> nums;
-	for(int i = 1; i < (int)tokens.size(); i++)
-	{
-		//cout << tokens[i] << " ";
-		if(tokens[i]== "-" && (isOperator(tokens[i-1]) || isParenthesis(tokens[i-1])))
-		{
-			tokens[i + 1].insert(0, "-");
-			tokens.erase(tokens.begin() + i);
-		}
-
-	}
 	if(convertInput(tokens, tokens.size(), converted))
 	{
-		//cout << endl;
 		for ( int i = 0; i < (int) converted.size(); i++ )
 		{
-
-			//cout << converted[i] << " ";
 			if ( !isOperator(converted[i]) )
 			{
 
 				try
 				{
-					nums.push(o->toNumber(converted[i], ansOld)->simplify());
+					nums.push(toNumber(converted[i], ansOld));
 				}
 				catch(int e)
 				{
@@ -219,7 +206,7 @@ Number* Shunting:: evaluate(string input, Number* ansOld)
 				
 				Number* n2 = nums.top();
 				nums.pop();
-				if (!nums.empty())
+				if (!nums.empty() )
 				{
 					Number* n1 = nums.top();
 					nums.pop();
@@ -245,8 +232,8 @@ Number* Shunting:: evaluate(string input, Number* ansOld)
 					else
 						result = n2;
 				}
-				//cout << result->toString() << endl;
-				nums.push(result->simplify());
+
+				nums.push(result);
 
 			}
 		}
@@ -254,12 +241,73 @@ Number* Shunting:: evaluate(string input, Number* ansOld)
 
 	else
 	{
-		cout << "Mismatched parenthesis. Assuming answer = 0" << endl;
+		cout << "Mismatched parenthesis" << endl;
 		Number* result = new Rational(0);
 		nums.push(result);
 	}
 
 
-
 	return nums.top()->simplify();
 	}
+// Converts the input string to a number so we can check if it's rational or irrational. 
+Number* Shunting:: toNumber(string str, Number* ansOld){
+	Number* ans;
+	Operations * o = new Operations();
+	bool noAns = true;
+
+	if(str.at(0) == 'a')
+	{
+		ans = ansOld;
+		noAns = false;
+	}
+	if((str.at(0) == 'l')  || (str.at(0) == 'e') || (str.at(0) == 'p') || (str.at(0) == 's'))
+	{
+		ans = new Irrational(str);
+		noAns = false;
+	}
+	else
+	{
+		for(int i = 0; i < (int)str.size() && noAns; i++)
+		{
+			if(str.at(i) == '.')
+			{
+				ans = o->toRational(str);
+				noAns = false;
+				break;
+			}
+			else if(str.at(i) == 'r')
+			{
+				ans = new Irrational(str);
+				noAns = false;
+				break;
+			}
+			else if(str.at(i) == '/')
+			{
+				char *a=new char[str.size()+1];
+				a[str.substr(i-1).size()]=0;
+				memcpy(a,str.c_str(),str.substr(i-1).size());
+
+				char *b=new char[str.size()+1];
+				b[str.substr(i+1).size()]=0;
+				memcpy(b,str.c_str(),str.substr(i+1).size());
+				ans = new Rational(atoi(a), atoi(b));
+				noAns = false;
+				delete[] a;
+				delete[] b;
+				break;
+			}
+		}
+
+	}
+
+	if(noAns)
+	{
+		char *c=new char[str.size()+1];
+		c[str.size()]=0;
+		memcpy(c,str.c_str(),str.size());
+		ans = new Rational(atoi(c));
+		delete[] c;
+	}
+
+	return ans;
+}

@@ -85,9 +85,16 @@ Irrational::Irrational(string irr){ //the constructor that is given a number and
 		for(i += 3; i < (int)irr.length(); i++){
 			rootOf += irr.at(i);
 		}
-		double a = atof(n.c_str());
-		double b = atof(rootOf.c_str());
-		fValue = pow (b, (1/a));
+ 		if(rootOf.find("/0")){
+ 			cout << "Cannot divide by 0. Assuming expression = 0"
+ 			type = "NaN";        //Should fix the 3rt:27/0 problem
+ 			fValue = 0;
+ 		}
+ 		else{
+ 			double a = atof(n.c_str());
+ 			double b = atof(rootOf.c_str());
+ 			fValue = pow (b, (1/a));
+ 		}
 	}
 	else{
 		cout<< "Error...not an irrational number" << endl;

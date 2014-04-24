@@ -133,7 +133,9 @@ string Irrational::toString(){  //prints the string of the irrational
 			double b = atof(base.c_str());
 			double value = ( log (b)/ log (a));
 			if(value == (int) value){
-				str = "1 / " + value;
+				stringstream ss;
+				ss<<(int)value;
+				str = "1/" + ss.str();
 			}
 		}
 		else if(fValue != 1)

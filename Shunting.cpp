@@ -184,6 +184,15 @@ Number* Shunting:: evaluate(string input, Number* ansOld)
 	vector<string> tokens = parseTokens(input);
 	vector<string> converted;
 	stack<Number*> nums;
+ 	for(int i = 1; i < (int)tokens.size(); i++)
+ 	{
+ 		if(tokens[i]== "-" && (isOperator(tokens[i-1]) || isParenthesis(tokens[i-1])))
+ 		{
+ 			tokens[i + 1].insert(0, "-");
+ 			tokens.erase(tokens.begin() + i);
+ 		}
+ 
+ 	}
 	if(convertInput(tokens, tokens.size(), converted))
 	{
 		for ( int i = 0; i < (int) converted.size(); i++ )
@@ -193,7 +202,7 @@ Number* Shunting:: evaluate(string input, Number* ansOld)
 
 				try
 				{
-					nums.push(toNumber(converted[i], ansOld));
+					nums.push(toNumber(converted[i], ansOld->simplify()));
 				}
 				catch(int e)
 				{
@@ -233,7 +242,7 @@ Number* Shunting:: evaluate(string input, Number* ansOld)
 						result = n2;
 				}
 
-				nums.push(result);
+				nums.push(result->simplify());
 
 			}
 		}
@@ -241,7 +250,7 @@ Number* Shunting:: evaluate(string input, Number* ansOld)
 
 	else
 	{
-		cout << "Mismatched parenthesis" << endl;
+		cout << "Mismatched parenthesis. Assuming answer = 0" << endl;
 		Number* result = new Rational(0);
 		nums.push(result);
 	}

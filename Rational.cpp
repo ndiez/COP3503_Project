@@ -15,12 +15,6 @@ Rational::Rational(int numerator, int denominator){
 		cout<< "Cannot divide by zero, assuming denominator = 1." << endl;
 		denominator = 1;
 	}
-
-	if(denominator < 0)
-	{
-		numerator *= -1;
-		denominator *= -1;
-	}
 	this->numerator = numerator;
 	this->denominator = denominator;
 
@@ -84,11 +78,11 @@ Number* Rational::simplify() {
 	int a= this->getNum();
 	int b = this->getDenom();
 	if (a == b) {
-		Number* one = new Rational(1);
+		Number* one = new Rational(1, 1);
 		return one;
 	}
 	else if (b == 1) {
-		Number* integer = new Rational(a);
+		Number* integer = new Rational(a, 1);
 		return integer;
 	}
 	for (int j = 0; j < 10; j++ ){

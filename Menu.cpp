@@ -8,7 +8,7 @@
 
 using namespace std;
 int main() {
-	Number* ans;
+	Number* ans = new Rational(0);
 	Number* ansOld = new Rational(0);
 	Shunting* s = new Shunting();
 	int computeLoop = 1;
@@ -18,15 +18,15 @@ int main() {
 	cout << "------------------------------------------------------------------------------" << endl;
 	cout << "Expression Calculator Project"													 << endl;
 	cout << "By: Yayati Bagga, Nick Diez, Kayleigh Dvorak, Mathew Giaramita"		 		 << endl;
-	cout << "!!! WARNING !!! Include parenthesis outside of negative numbers when entering, and put negative numbers first"	 << endl;
-	cout << "Example: (-12) * 5"															 << endl;
+	cout << "!!! WARNING !!! Include negative numbers first."								 << endl;
+	cout << "Example: 5 * -12 -----> -12 * 5"															 << endl;
 	cout << "!!! WARNING !!! Include a space between each operation of the following type:"  << endl;
 	cout << "+, -, *, /, ^." 																 << endl;
 	cout << "------------------------------------------------------------------------------" << endl;
 	cout << endl;
 	while (computeLoop == 1) {
 		cout << "Enter an expression to compute, menu commands are: " 					 	 << endl;
-		cout << "Help, Review, Quit" 														 << endl;
+		cout << "Help, Float, Review, Quit" 														 << endl;
 		cout << endl;
 		cout << "Enter an expression or an option from the menu:" 							 << endl;
 		cin.clear();
@@ -202,6 +202,7 @@ int main() {
 				 computeInput.at(0) == 'p' ||
 				 computeInput.at(0) == 'e' ||
 				 computeInput.at(0) == 'l' ||
+				 computeInput.at(0) == '.' ||
 				 computeInput.at(0) == 's' ) {
 				expressionOld = computeInput;
 				cin.clear();
@@ -212,6 +213,11 @@ int main() {
 				else
 					cout << "The result of your expression is: " << ans->toString().substr(0, ans->toString().length() - 4) << endl;
 				computeInput.clear();
+		}
+		else if (computeInput.at(0) == 'F' ||
+				 computeInput.at(0) == 'f') {
+			cout << "The floating point of the previous answer is:" << endl;
+			cout << ans->getValue() << endl;
 		}
 		else {
 			cout << "Invalid expression..." << endl;

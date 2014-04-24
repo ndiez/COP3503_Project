@@ -6,7 +6,7 @@ By: Yayati Bagga, Nick Diez, Kayleigh Dvorak, Mathew Giaramita, //Freddy Jimenez
 
 
 Can't do:
--1 + pi (includes + 0)
+-roots
 -divide roots by rational
 -log base anything of 2 digits
 -log_64:4 (more complex)
@@ -17,3 +17,5 @@ Can't do:
 Can do:
 -81^(1/4) and 4rt:81
 -Rationals
+-3rt:108 * 3rt:16
+-2 + pi

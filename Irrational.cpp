@@ -1,4 +1,5 @@
 #include "Irrational.h"
+#include "Operations.h"
 #include <cmath>
 #include <stdlib.h>
 #include <iostream>
@@ -174,6 +175,13 @@ float Irrational::getValue(){
 }
 
 Number* Irrational::simplify(){
+	Operations* o = new Operations();
+	if (100 * fValue == (int)fValue * 100) {
+		stringstream ss;
+		ss << (float)fValue;
+		return o->toRational(ss.str());
+	}
+
 	return this;
 }
 int Irrational::getNum() {

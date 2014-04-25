@@ -257,7 +257,7 @@ Number* Shunting:: evaluate(string input, Number* ansOld)
 
 
 	return nums.top()->simplify();
-	}
+}
 // Converts the input string to a number so we can check if it's rational or irrational. 
 Number* Shunting:: toNumber(string str, Number* ansOld){
 	Number* ans;
@@ -319,4 +319,85 @@ Number* Shunting:: toNumber(string str, Number* ansOld){
 	}
 
 	return ans;
+}
+
+
+Number* Shunting:: evaluate(string input)
+{
+	Operations* o = new Operations();
+
+	vector<string> tokens = parseTokens(input);
+	vector<string> converted;
+	stack<Number*> nums;
+ 	for(int i = 1; i < (int)tokens.size(); i++)
+ 	{
+ 		if(tokens[i]== "-" && (isOperator(tokens[i-1]) || isParenthesis(tokens[i-1])))
+ 		{
+ 			tokens[i + 1].insert(0, "-");
+ 			tokens.erase(tokens.begin() + i);
+ 		}
+
+ 	}
+	if(convertInput(tokens, tokens.size(), converted))
+	{
+		for ( int i = 0; i < (int) converted.size(); i++ )
+		{
+			if ( !isOperator(converted[i]) )
+			{
+				try
+				{
+					nums.push(toNumber(converted[i], new Rational(1)));
+				}
+				catch(int e)
+				{
+					throw invalid_argument("Invalid expression input, please adhere to input standards.");
+				}
+			}
+			else
+			{
+				Number* result;
+
+				Number* n2 = nums.top();
+				nums.pop();
+				if (!nums.empty() )
+				{
+					Number* n1 = nums.top();
+					nums.pop();
+
+					if(converted[i] == "+") {
+						result = o->add(n1, n2);
+					}
+					else if(converted[i] == "-")
+						result = o->subtract(n1, n2);
+					else if(converted[i] == "*")
+						result = o->multiply(n1, n2);
+					else if(converted[i] == "/")
+						result = o->divide(n1, n2);
+					else if(converted[i] == "^")
+						result = o->exponentiate(n1, n2);
+					else
+						throw invalid_argument("Invalid expression input, please adhere to input standards.");
+				}
+				else
+				{
+					if ( converted[i] == "-" )
+						result = o->multiply(n2, new Rational(-1));
+					else
+						result = n2;
+				}
+				nums.push(result);
+
+			}
+		}
+	}
+
+	else
+	{
+		cout << "Mismatched parenthesis. Assuming answer = 0" << endl;
+		Number* result = new Rational(0);
+		nums.push(result);
+	}
+
+
+	return nums.top();
 }

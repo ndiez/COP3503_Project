@@ -128,15 +128,19 @@ string Irrational::toString(){  //prints the string of the irrational
 		str = "pi";
 	}
 	else if(type == "log"){
-		if(base > logOf){
-			double a = atof(logOf.c_str());
-			double b = atof(base.c_str());
+		double a = atof(logOf.c_str());
+		double b = atof(base.c_str());
+		if(b > a){
 			double value = ( log (b)/ log (a));
 			if(value == (int) value){
 				stringstream ss;
 				ss<<(int)value;
 				str = "1/" + ss.str();
 			}
+			else if(fValue != 1)
+				str = "log_" + base + ":" + logOf;
+			else
+				str = "1";
 		}
 		else if(fValue != 1)
 			str = "log_" + base + ":" + logOf;

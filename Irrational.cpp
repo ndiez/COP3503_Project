@@ -1,5 +1,6 @@
 #include "Irrational.h"
 #include "Operations.h"
+#include "Shunting.h"
 #include <cmath>
 #include <stdlib.h>
 #include <iostream>
@@ -176,13 +177,14 @@ float Irrational::getValue(){
 
 Number* Irrational::simplify(){
 	Operations* o = new Operations();
-	if (100 * fValue == (int)fValue * 100) {
+	if (1000 * fValue == (int)fValue * 1000) {
 		stringstream ss;
 		ss << (float)fValue;
 		return o->toRational(ss.str());
 	}
-
-	return this;
+	Shunting* s = new Shunting();
+	Number* simplified = s->evaluate(this->toString());
+	return simplified;
 }
 int Irrational::getNum() {
 	return 0;

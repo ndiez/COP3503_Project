@@ -48,7 +48,7 @@ Number* Operations::add(Number* a, Number* b) {
 			else if(aNum == 1) {
 				stringstream tt;
 				tt<<aDenom;
-				irrAns = "( 1 + " + tt.str() + " * " + irrStr + " ) / " + tt.str();
+				irrAns = "(1 + " + tt.str() + " * " + irrStr + " ) / " + tt.str();
 				irrVal = b->getValue();
 				ansVal = (float) (1/aDenom) + irrVal;
 				ans = new Irrational(ansVal, irrAns);
@@ -57,7 +57,7 @@ Number* Operations::add(Number* a, Number* b) {
 				stringstream ss, tt;
 				ss<<aNum;
 				tt<<aDenom;
-				irrAns = tt.str() + " + " + irrStr;
+				irrAns = ss.str() + " + " + irrStr;
 				irrVal = b->getValue();
 				ansVal = (float) (aNum/aDenom) + irrVal;
 				ans = new Irrational(ansVal, irrAns);
@@ -66,7 +66,7 @@ Number* Operations::add(Number* a, Number* b) {
 				stringstream ss, tt;
 				ss<<aNum;
 				tt<<aDenom;
-				irrAns = "( " + ss.str() + " + " + tt.str() + irrStr + " )" + " / " + tt.str();
+				irrAns = "( " + ss.str() + " + " + tt.str() + irrStr + " ) / " + tt.str();
 				irrVal = b->getValue();
 				ansVal = (float) (aNum/aDenom) + irrVal;
 				ans = new Irrational(ansVal, irrAns);
@@ -125,7 +125,7 @@ Number* Operations::add(Number* a, Number* b) {
 			stringstream ss;
 			ss<< (int) logofans;
 			ansVal = a->getValue() + b->getValue();
-			irrAns = "log_(" + a->getBase() + "):" + ss.str();
+			irrAns = "log_" + a->getBase() + ":" + ss.str();
 			ans = new Irrational(ansVal, irrAns);
 		}
 		else{
@@ -184,7 +184,7 @@ Number* Operations::subtract(Number* a, Number* b) {
 			stringstream ss, tt;
 			ss<<aNum;
 			tt<<aDenom;
-			irrAns = "( " + ss.str() + " - " + tt.str() + irrStr + " )" + " / " + tt.str();
+			irrAns = "( " + ss.str() + " - " + tt.str() + irrStr + " ) " + " / " + tt.str();
 			irrVal = b->getValue();
 			ansVal = (float) (aNum/aDenom) - irrVal;
 			ans = new Irrational(ansVal, irrAns);
@@ -204,7 +204,7 @@ Number* Operations::subtract(Number* a, Number* b) {
 			stringstream tt;
 			tt<<bDenom;
 			irrAns = "( " + tt.str() + " * " + irrStr + " - 1 ) / " + tt.str();
-			irrVal = a->getValue();
+			irrVal = a->getValue(); 
 			ansVal = (float) irrVal - (1/bDenom);
 			ans = new Irrational(ansVal, irrAns);
 			}
@@ -229,20 +229,18 @@ Number* Operations::subtract(Number* a, Number* b) {
 
 			}
 			if((a->getType2() == "log" && b->getType2() == "log") && (a->getBase() == b->getBase())) {
-
-				char* g = new char[a->getLogOf().size()];
-				g[a->getLogOf().size()]= 0;
-				memcpy(g,a->getLogOf().c_str(),a->getLogOf().size());
-				char* h = new char[b->getLogOf().size()];
-				h[b->getLogOf().size()]= 0;
-				memcpy(h,b->getLogOf().c_str(),b->getLogOf().size());
-				logofa = (float)atof(g);
-				logofb = (float)atof(h);
+				logofa = (float)atof(a->getLogOf().c_str());
+				logofb = (float)atof(b->getLogOf().c_str());
+				if (logofb != 0)
 				logofans = logofa / logofb;
+				else {
+				cout << "Error Occurred, tried to divide by 0." << endl;
+				logofans = 1;
+				}
 				stringstream ss;
 				ss<< (int) logofans;
 				ansVal = a->getValue() - b->getValue();
-				irrAns = "log_(" + a->getBase() + "):" + ss.str();
+				irrAns = "log_" + a->getBase() + ":" + ss.str();
 				ans = new Irrational(ansVal, irrAns);
 			}
 			else {
@@ -297,7 +295,7 @@ Number* Operations::multiply(Number* a, Number* b) {
 						stringstream ss, tt;
 						ss<<aNum;
 						tt<<aDenom;
-						irrAns = "( " + ss.str() + " * " + irrStr + " )" + " / " + tt.str();
+						irrAns = "( " + ss.str() + " * " + irrStr + " ) " + " / " + tt.str();
 						irrVal = b->getValue();
 						ansVal = (float) (aNum/aDenom) * irrVal;
 						ans = new Irrational(ansVal, irrAns);
@@ -370,25 +368,67 @@ Number* Operations::divide(Number* a, Number* b) {
 					aNum = a->getNum();
 					aDenom = a->getDenom();
 					irrStr = b->toString();
-					stringstream ss, tt;
-					ss<<aNum;
-					tt<<aDenom;
-					irrAns = ss.str() + " / ( " + tt.str() +  " * " + irrStr + " )";
-					irrVal = b->getValue();
-					ansVal = (float) (aNum/aDenom) / irrVal;
-					ans = new Irrational(ansVal, irrAns);
+					if(aDenom == 1 && aNum == 1){
+						irrAns = irrStr;
+						ansVal = b->getValue();
+						ans = new Irrational(ansVal, irrAns);
+					}
+					else if(aDenom == 1){
+						stringstream ss;
+						ss<< aNum;
+						irrAns = ss.str() + " / " + irrStr;
+						ansVal = (float) aNum / b->getValue();
+						ans = new Irrational(ansVal, irrAns);
+					}
+					else if(aNum == 1){
+						stringstream ss;
+						ss<<aDenom;
+						irrAns = irrStr + " * " + ss.str();
+						ansVal = b->getValue() * aDenom;
+						ans = new Irrational(ansVal, irrAns);
+					}
+					else{
+						stringstream ss, tt;
+						ss<<aNum;
+						tt<<aDenom;
+						irrAns = "( " + tt.str() + " * " + irrStr + " ) / " + ss.str();
+						irrVal = b->getValue();
+						ansVal = (float) (aDenom/aNum) * irrVal;
+						ans = new Irrational(ansVal, irrAns);
+					}
 				}
 				else {
 					bNum = b->getNum();
 					bDenom = b->getDenom();
 					irrStr = a->toString();
-					stringstream ss, tt;
-					ss<<bNum;
-					tt<<bDenom;
-					irrAns = "( " + irrStr + " * " + tt.str() + " ) / " + ss.str();
-					irrVal = a->getValue();
-					ansVal = (float) (bNum/bDenom) + irrVal;
-					ans = new Irrational(ansVal, irrAns);
+					if(bNum == 1 && bDenom == 1){
+						irrAns = irrStr;
+						ansVal = a->getValue();
+						ans = new Irrational(ansVal, irrAns);
+					}
+					else if(bDenom == 1){
+						stringstream ss;
+						ss<<bNum;
+						irrAns = irrStr + " / " + ss.str();
+						ansVal = a->getValue() / bNum;
+						ans = new Irrational(ansVal, irrAns);
+					}
+					else if(bNum == 1){
+						stringstream ss;
+						ss<<bDenom;
+						irrAns = irrStr + " * " + ss.str();
+						ansVal = a->getValue() * bDenom;
+						ans = new Irrational(ansVal, irrAns);
+					}
+					else{
+						stringstream ss, tt;
+						ss<<bNum;
+						tt<<bDenom;
+						irrAns = "( " + tt.str() + " * " + irrStr + " )" + " / " + ss.str();
+						irrVal = a->getValue();
+						ansVal = (float) (bDenom/bNum) * irrVal;
+						ans = new Irrational(ansVal, irrAns);
+					}
 				}
 
 			}

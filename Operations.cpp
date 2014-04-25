@@ -132,7 +132,7 @@ Number* Operations::add(Number* a, Number* b) {
 			ans = new Irrational(ansVal, irrAns);
 		}
 	}
-	ans->simplify();
+	//ans->simplify();
 	return ans;
 }
 Number* Operations::subtract(Number* a, Number* b) {
@@ -248,7 +248,7 @@ Number* Operations::subtract(Number* a, Number* b) {
 				ans = new Irrational(ansVal, irrAns);
 			}
 		}
-	ans->simplify();
+	//ans->simplify();
 	return ans;
 }
 Number* Operations::multiply(Number* a, Number* b) {
@@ -340,7 +340,7 @@ Number* Operations::multiply(Number* a, Number* b) {
 				ansVal = (float) irrVal * irrVal2;
 				ans = new Irrational(ansVal, irrAns);
 			}
-	ans->simplify();
+	//ans->simplify();
 	return ans;
 }
 Number* Operations::divide(Number* a, Number* b) {
@@ -435,7 +435,7 @@ Number* Operations::divide(Number* a, Number* b) {
 			ansVal = (float) irrVal / irrVal2;
 			ans = new Irrational(ansVal, irrAns);
 		}
-	ans->simplify();
+	//ans->simplify();
 	return ans;
 }
 Number* Operations::exponentiate(Number* a, Number* b) {
@@ -482,7 +482,8 @@ Number* Operations::exponentiate(Number* a, Number* b) {
 			float v = pow (a->getValue(), b->getValue());
 			ans = new Irrational(v, str);
 		}
-	return ans->simplify();
+	//ans->simplify();
+	return ans;
 }
 Number* Operations::toRational(string a) {
 	Number* ans;

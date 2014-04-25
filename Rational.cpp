@@ -9,7 +9,6 @@ Rational::Rational(int numerator){
 	sType = "Rational";
 	fValue = numerator;
 }
-
 Rational::Rational(int numerator, int denominator){
 	if(denominator == 0){
 		cout<< "Cannot divide by zero, assuming denominator = 1." << endl;

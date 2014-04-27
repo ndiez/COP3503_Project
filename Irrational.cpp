@@ -3,6 +3,7 @@
 #include "Shunting.h"
 #include <cmath>
 #include <stdlib.h>
+#include <cstring>
 #include <iostream>
 #include <sstream>
 #include <list>
@@ -25,6 +26,7 @@ Irrational::Irrational(string irr){ //the constructor that is given a number and
 	else if(irr.at(0) == 'l'){
 		type = "log";
 		int i;
+		bool isPow = false;
 		for(i = 4; irr.at(i) != ':'; i++){
 			if (irr.at(i) == ':') {
 				break;
@@ -38,7 +40,18 @@ Irrational::Irrational(string irr){ //the constructor that is given a number and
 			}
 			else {
 				logOf += irr.at(i);
+				if(irr.at(i) == '^'){
+					isPow = true;
+				}
 			}
+		}
+		if(isPow == true){
+			string ans;
+			for(int i = base.length()+1; i < logOf.length(); i++){
+				ans += logOf.at(i);
+				cout << ans + "made it" << endl;
+			}
+			fValue = atof(ans.c_str());
 		}
 		if(logOf == base){
 			fValue = 1;
@@ -118,7 +131,7 @@ string Irrational::getLogOf(){
 
 string Irrational::toString(){  //prints the string of the irrational
 	string str;
-	if (fValue == (int)fValue) {
+	if (this->fValue == (int)this->fValue) {
 		stringstream ss;
 		ss<<(int)fValue;
 		str= ss.str();
@@ -166,7 +179,7 @@ string Irrational::toString(){  //prints the string of the irrational
 		return this->type;
 	}
 	else{
-		return "Error: no toString for this Irrational.";
+		return "Error: no string for this Irrational.";
 	}
 	return str;
 }
@@ -177,14 +190,17 @@ float Irrational::getValue(){
 
 Number* Irrational::simplify(){
 	Operations* o = new Operations();
-	if (1000 * fValue == (int)fValue * 1000) {
+	if(1000 * fValue == (int)fValue * 1000) {
 		stringstream ss;
 		ss << (float)fValue;
 		return o->toRational(ss.str());
 	}
-	Shunting* s = new Shunting();
-	Number* simplified = s->evaluate(this->toString());
-	return simplified;
+	else  {
+		return this;
+	}
+	//Shunting* s = new Shunting();
+	//Number* simplified = s->evaluate(this->toString());
+	//	return simplified;
 }
 int Irrational::getNum() {
 	return 0;

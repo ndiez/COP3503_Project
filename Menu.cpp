@@ -16,19 +16,17 @@ int main() {
 	int reviewLoop = 0;
 	string computeInput, helpInput, reviewInput, expressionOld;
 	cout << "------------------------------------------------------------------------------" << endl;
-	cout << "Expression Calculator Project"													 << endl;
-	cout << "By: Yayati Bagga, Nick Diez, Kayleigh Dvorak, Mathew Giaramita"		 		 << endl;
-	cout << "!!! WARNING !!! Include negative numbers first."								 << endl;
-	cout << "Example: 5 * -12 -----> -12 * 5"															 << endl;
+	cout << "Expression Calculator Project"							 << endl;
+	cout << "By: Yayati Bagga, Nick Diez, Kayleigh Dvorak, Mathew Giaramita"		 << endl;
 	cout << "!!! WARNING !!! Include a space between each operation of the following type:"  << endl;
-	cout << "+, -, *, /, ^." 																 << endl;
+	cout << "+, -, *, /, ^." 								 << endl;
 	cout << "------------------------------------------------------------------------------" << endl;
 	cout << endl;
 	while (computeLoop == 1) {
-		cout << "Enter an expression to compute, menu commands are: " 					 	 << endl;
-		cout << "Help, Float, Review, Quit" 														 << endl;
-		cout << endl;
-		cout << "Enter an expression or an option from the menu:" 							 << endl;
+		cout << "Enter an expression to compute, menu commands are: " 		 	 << endl;
+		cout << "Help, Float, Review, Quit" 						 << endl;
+		cout << "" 									 << endl;
+		cout << "Enter an expression or an option from the menu:" 			 << endl;
 		cin.clear();
 		computeInput.clear();
 		getline(cin, computeInput);
@@ -63,7 +61,6 @@ int main() {
 					cout << "Nth Root: \'xrt:y' where x and y are either rational or irrational numbers." 	 << endl;
 					cout << "Square Root: \'sqrt:x\' where x is either a rational or irrational number."     << endl;
 					cout << "Log Base: \'log_y:x\' where x and y are either rational or irrational numbers." << endl;
-					cout << "Negative Numbers: \'(-x)\' Add parenthesis outside of number." << endl;
 					cout << "Valid irrational numbers are pi and e."										 << endl;
 					cout << "------------------------------------------------------------------------------" << endl;
 				}
@@ -74,7 +71,7 @@ int main() {
 					cout << "Review mode allows the user to look back at the last expression entered and "   << endl;
 					cout << "also gives the user an option to view a floating point representation of the"   << endl;
 					cout << "previous result. Additionally, there is an option to set \"ans\" to the value"  << endl;
-					cout << "of the previous result if the user wishes." 									 << endl;
+					cout << "of the previous result if the user wishes, although this is automatically done."<< endl;
 					cout << "------------------------------------------------------------------------------" << endl;
 				}
 				else if (helpInput.at(0) == '3' ||
@@ -82,10 +79,10 @@ int main() {
 						 helpInput.at(0) == 'c' ) {
 					cout << "------------------------------------------------------------------------------" << endl;
 					cout << "Nick Diez: 		Menu and Operations" 										 << endl;
-					cout << "Mathew Giaramita: 	Operations and Irrational" 									 << endl;
 					cout << "Kayleigh Dvorak: 	Shunting and Rational" 										 << endl;
-					cout << "Freddy Jimenez:  	Nothing" 													 << endl;
+					cout << "Mathew Giaramita: 	Operations and Irrational" 									 << endl;
 					cout << "Yayati Bagga: 		Shunting" 													 << endl;
+					cout << "Freddy Jimenez:  	Absolutely Nothing"											 << endl;
 					cout << "------------------------------------------------------------------------------" << endl;
 				}
 				else if (helpInput.at(0) == '4' ||

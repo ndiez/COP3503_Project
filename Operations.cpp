@@ -7,7 +7,6 @@
 #include <cmath>
 #include <cstring>
 using namespace std;
-
 Operations::Operations() {
 	aNum = 0;
 	aDenom = 0;
@@ -17,7 +16,6 @@ Operations::Operations() {
 	ansDenom = 0;
 }
 Operations::~Operations() {
-
 }
 Number* Operations::add(Number* a, Number* b) {
 	Number* ans;
@@ -215,11 +213,6 @@ Number* Operations::subtract(Number* a, Number* b) {
 				irrAns = "( " + tt.str() + " * " + irrStr + " - " + ss.str() + " ) / " + tt.str();
 				irrVal = a->getValue();
 				ansVal = (float) irrVal - (float) bNum/bDenom;
-				
-				stringstream test;
-				test<<ansVal;
-				cout << "ansVal = " + test.str() << endl;
-				
 				ans = new Irrational(ansVal, irrAns);
 			}
 		}
@@ -250,7 +243,6 @@ Number* Operations::subtract(Number* a, Number* b) {
 				ans = new Irrational(ansVal, irrAns);
 			}
 		}
-	//ans->simplify();
 	return ans;
 }
 Number* Operations::multiply(Number* a, Number* b) {
@@ -331,7 +323,6 @@ Number* Operations::multiply(Number* a, Number* b) {
 						ans = new Irrational(ansVal, irrAns);
 					}
 				}
-
 			}
 			else {
 				irrStr  = a->toString();
@@ -342,7 +333,6 @@ Number* Operations::multiply(Number* a, Number* b) {
 				ansVal = (float) irrVal * irrVal2;
 				ans = new Irrational(ansVal, irrAns);
 			}
-	//ans->simplify();
 	return ans;
 }
 Number* Operations::divide(Number* a, Number* b) {
@@ -437,7 +427,6 @@ Number* Operations::divide(Number* a, Number* b) {
 			ansVal = (float) irrVal / irrVal2;
 			ans = new Irrational(ansVal, irrAns);
 		}
-	//ans->simplify();
 	return ans;
 }
 Number* Operations::exponentiate(Number* a, Number* b) {
@@ -479,12 +468,11 @@ Number* Operations::exponentiate(Number* a, Number* b) {
 				ans = new Irrational(ansStr);
 			}
 		}
-		else { //a is not rational
+		else {
 			string str = a->toString() + "^" + b->toString();
 			float v = pow (a->getValue(), b->getValue());
 			ans = new Irrational(v, str);
 		}
-	//ans->simplify();
 	return ans;
 }
 Number* Operations::toRational(string a) {

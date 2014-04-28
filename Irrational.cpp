@@ -7,16 +7,13 @@
 #include <iostream>
 #include <sstream>
 #include <list>
-
 Irrational::Irrational(){
 }
-
 Irrational::Irrational(float z, string irr){ //used for creating irrationals that contain operations
 	sType = "Irrational";
 	fValue = z;
 	type = irr;
 }
-
 Irrational::Irrational(string irr){ //the constructor that is given a number and figures out which type
 	sType = "Irrational";           //of irrational it is and creates it
 	if(irr.at(0) == 'e'){
@@ -100,22 +97,14 @@ Irrational::Irrational(string irr){ //the constructor that is given a number and
 		for(i += 3; i < (int)irr.length(); i++){
 			rootOf += irr.at(i);
 		}
- 	//	if(rootOf.find("/0")){
- 	//		cout << "Cannot divide by 0. Assuming denominator = 1." << endl;
- 	//		type = "NaN";        //Should fix the 3rt:27/0 problem
- 	//		fValue = 0;
- 	//	}
- 		//else{
  			double a = atof(n.c_str());
  			double b = atof(rootOf.c_str());
  			fValue = pow (b, (1/a));
- 		//}
 	}
 	else{
 		cout<< "Error...not an irrational number" << endl;
 	}
 }
-
 string Irrational::getType(){
 	return sType;             //is used to tell other classes that the number is irrational
 }
@@ -128,7 +117,6 @@ string Irrational::getBase(){
 string Irrational::getLogOf(){
 	return logOf;             //returns what the log is being taken of
 }
-
 string Irrational::toString(){  //prints the string of the irrational
 	string str;
 	if (this->fValue == (int)this->fValue) {
@@ -183,11 +171,9 @@ string Irrational::toString(){  //prints the string of the irrational
 	}
 	return str;
 }
-
 float Irrational::getValue(){
 	return fValue;         //gets the float value of the irrational
 }
-
 Number* Irrational::simplify(){
 	Operations* o = new Operations();
 	if(1000 * fValue == (int)fValue * 1000) {
@@ -198,9 +184,6 @@ Number* Irrational::simplify(){
 	else  {
 		return this;
 	}
-	//Shunting* s = new Shunting();
-	//Number* simplified = s->evaluate(this->toString());
-	//	return simplified;
 }
 int Irrational::getNum() {
 	return 0;
